@@ -202,11 +202,15 @@ export function IntegrationSettingsPage({
             </div>
             <div className="card-muted">
               <div className="label">Last test connection</div>
-              <div>{lastTest ? `${lastTest.status}: ${lastTest.detail}` : readinessItem?.testConnectionStatus ?? "not_tested"}</div>
+              <div>{lastTest ? `${lastTest.status}: ${lastTest.detail}` : readinessItem?.lastTestConnectionStatus ?? readinessItem?.testConnectionStatus ?? "not_tested"}</div>
+            </div>
+            <div className="card-muted">
+              <div className="label">Last test timestamp</div>
+              <div>{readinessItem?.lastTestConnectionAt ?? "not tested yet"}</div>
             </div>
             <div className="card-muted">
               <div className="label">Last integration error</div>
-              <div>{lastError ? `${lastError.errorCode || lastError.status}: ${lastError.errorMessage || "see safe metadata"}` : "No recent errors"}</div>
+              <div>{lastError ? `${lastError.errorCode || lastError.status}: ${lastError.errorMessage || "see safe metadata"}` : readinessItem?.lastErrorCode ?? "No recent errors"}</div>
             </div>
             <div className="card-muted">
               <div className="label">Blocking reasons</div>

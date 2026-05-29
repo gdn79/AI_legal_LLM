@@ -10,6 +10,7 @@ class CourtImportJobCreate(BaseModel):
     date_to: date
     participation_role: str
     provider_mode: str | None = None
+    dry_run: bool = False
 
 
 class CourtImportJobRead(BaseModel):

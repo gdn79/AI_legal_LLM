@@ -5,10 +5,14 @@ from pydantic import BaseModel
 
 class OrganizationLookupRequest(BaseModel):
     inn: str
+    sandbox: bool = False
+    dry_run: bool = True
 
 
 class OrganizationCreate(BaseModel):
     inn: str
+    sandbox: bool = False
+    dry_run: bool = False
 
 
 class OrganizationSnapshotRead(BaseModel):

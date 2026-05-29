@@ -43,6 +43,7 @@ class CourtImportService:
         date_to: date,
         participation_role: str,
         provider_mode: str | None,
+        dry_run: bool = False,
         current_user: User,
     ) -> CourtCaseImportJob:
         organization = self.db.get(Organization, organization_id)
@@ -118,13 +119,26 @@ class CourtImportService:
         self.db.add(job)
         self.db.flush()
 
-        results = adapter.search_cases(
-            organization_name=organization.short_name or organization.full_name or organization.inn,
-            inn=inn,
-            date_from=date_from,
-            date_to=date_to,
-            participation_role=participation_role,
-        )
+        if mode == "COURT_SANDBOX_READY" and hasattr(adapter, "import_cases"):
+            response = adapter.import_cases(
+                {
+                    "organization_name": organization.short_name or organization.full_name or organization.inn,
+                    "inn": inn,
+                    "date_from": date_from.isoformat(),
+                    "date_to": date_to.isoformat(),
+                    "participation_role": participation_role,
+                },
+                dry_run=dry_run,
+            )
+            results = response["cases"]
+        else:
+            results = adapter.search_cases(
+                organization_name=organization.short_name or organization.full_name or organization.inn,
+                inn=inn,
+                date_from=date_from,
+                date_to=date_to,
+                participation_role=participation_role,
+            )
 
         created_count = 0
         for item in results:

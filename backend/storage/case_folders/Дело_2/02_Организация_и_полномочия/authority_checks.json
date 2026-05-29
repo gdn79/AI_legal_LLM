@@ -1,5 +1,77 @@
 [
   {
+    "id": 31,
+    "document_kind": "claim",
+    "required_scopes": [
+      "REPRESENT_IN_COURT",
+      "SIGN_CLAIM"
+    ],
+    "result": "PASSED",
+    "reason": "Director authority confirmed by FNS data",
+    "power_of_attorney_id": null,
+    "checked_at": "2026-05-29T16:38:28.543513"
+  },
+  {
+    "id": 28,
+    "document_kind": "claim",
+    "required_scopes": [
+      "REPRESENT_IN_COURT",
+      "SIGN_CLAIM"
+    ],
+    "result": "PASSED",
+    "reason": "Director authority confirmed by FNS data",
+    "power_of_attorney_id": null,
+    "checked_at": "2026-05-29T16:35:37.333537"
+  },
+  {
+    "id": 24,
+    "document_kind": "claim",
+    "required_scopes": [
+      "REPRESENT_IN_COURT",
+      "SIGN_CLAIM"
+    ],
+    "result": "PASSED",
+    "reason": "Director authority confirmed by FNS data",
+    "power_of_attorney_id": null,
+    "checked_at": "2026-05-29T16:35:13.245605"
+  },
+  {
+    "id": 22,
+    "document_kind": "claim",
+    "required_scopes": [
+      "REPRESENT_IN_COURT",
+      "SIGN_CLAIM"
+    ],
+    "result": "PASSED",
+    "reason": "Director authority confirmed by FNS data",
+    "power_of_attorney_id": null,
+    "checked_at": "2026-05-29T16:34:15.025537"
+  },
+  {
+    "id": 17,
+    "document_kind": "claim",
+    "required_scopes": [
+      "REPRESENT_IN_COURT",
+      "SIGN_CLAIM"
+    ],
+    "result": "PASSED",
+    "reason": "Director authority confirmed by FNS data",
+    "power_of_attorney_id": null,
+    "checked_at": "2026-05-29T16:32:17.797759"
+  },
+  {
+    "id": 6,
+    "document_kind": "claim",
+    "required_scopes": [
+      "REPRESENT_IN_COURT",
+      "SIGN_CLAIM"
+    ],
+    "result": "PASSED",
+    "reason": "Director authority confirmed by FNS data",
+    "power_of_attorney_id": null,
+    "checked_at": "2026-05-29T13:23:58.821110"
+  },
+  {
     "id": 5,
     "document_kind": "claim",
     "required_scopes": [
@@ -7,32 +79,19 @@
       "SIGN_CLAIM"
     ],
     "result": "PASSED",
-    "reason": "Authority confirmed by power of attorney POA-HAPPY",
-    "power_of_attorney_id": 1,
-    "checked_at": "2026-05-29T15:35:33.149120"
+    "reason": "Director authority confirmed by FNS data",
+    "power_of_attorney_id": null,
+    "checked_at": "2026-05-29T13:23:02.088650"
   },
   {
     "id": 4,
-    "document_kind": "claim",
+    "document_kind": "pretension",
     "required_scopes": [
-      "REPRESENT_IN_COURT",
-      "SIGN_CLAIM"
+      "SIGN_PRETENSION"
     ],
     "result": "PASSED",
-    "reason": "Authority confirmed by power of attorney POA-HAPPY",
-    "power_of_attorney_id": 1,
-    "checked_at": "2026-05-29T15:35:33.080104"
-  },
-  {
-    "id": 3,
-    "document_kind": "claim",
-    "required_scopes": [
-      "REPRESENT_IN_COURT",
-      "SIGN_CLAIM"
-    ],
-    "result": "PASSED",
-    "reason": "Authority confirmed by power of attorney POA-HAPPY",
-    "power_of_attorney_id": 1,
-    "checked_at": "2026-05-29T15:35:33.046096"
+    "reason": "Director authority confirmed by FNS data",
+    "power_of_attorney_id": null,
+    "checked_at": "2026-05-29T13:23:02.072770"
   }
 ]

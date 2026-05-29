@@ -1,6 +1,8 @@
 Appendix list:
+- contract.txt
+- act.txt
+- invoice.txt
 - pretension.txt
 - claim.txt
-- powers_of_attorney.json
 - rag_report.json
 - audit_log.txt

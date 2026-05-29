@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 
 from app.api.deps import get_request_id, require_role
@@ -64,6 +64,8 @@ def test_fns_connection(
 @router.post("/lookup-by-inn", response_model=OrganizationPreview)
 def lookup_by_inn(
     payload: OrganizationLookupRequest,
+    sandbox: bool = Query(default=False),
+    dry_run: bool = Query(default=True),
     current_user: User = Depends(require_role(RoleName.admin, RoleName.lawyer)),
     db: Session = Depends(get_db),
     request_id: str = Depends(get_request_id),
@@ -77,10 +79,10 @@ def lookup_by_inn(
         operation="lookup_preview",
         request_id=request_id,
         created_by_id=current_user.id,
-        safe_request_metadata={"inn": payload.inn},
+        safe_request_metadata={"inn": payload.inn, "sandbox": sandbox, "dry_run": dry_run},
     )
     try:
-        preview = OrganizationService(db).lookup_preview(payload.inn)
+        preview = OrganizationService(db).lookup_preview(payload.inn, sandbox=sandbox or payload.sandbox, dry_run=dry_run if sandbox else payload.dry_run)
     except HTTPException as exc:
         detail = exc.detail if isinstance(exc.detail, dict) else {}
         integration.finish_log(
@@ -104,6 +106,8 @@ def lookup_by_inn(
 @router.post("", response_model=OrganizationRead)
 def create_organization(
     payload: OrganizationCreate,
+    sandbox: bool = Query(default=False),
+    dry_run: bool = Query(default=False),
     current_user: User = Depends(require_role(RoleName.admin, RoleName.lawyer)),
     db: Session = Depends(get_db),
     request_id: str = Depends(get_request_id),
@@ -117,10 +121,14 @@ def create_organization(
         operation="lookup_company",
         request_id=request_id,
         created_by_id=current_user.id,
-        safe_request_metadata={"inn": payload.inn},
+        safe_request_metadata={"inn": payload.inn, "sandbox": sandbox, "dry_run": dry_run},
     )
     try:
-        organization = OrganizationService(db).create_or_refresh_by_inn(payload.inn)
+        organization = OrganizationService(db).create_or_refresh_by_inn(
+            payload.inn,
+            sandbox=sandbox or payload.sandbox,
+            dry_run=dry_run if sandbox else payload.dry_run,
+        )
     except HTTPException as exc:
         detail = exc.detail if isinstance(exc.detail, dict) else {}
         integration.finish_log(

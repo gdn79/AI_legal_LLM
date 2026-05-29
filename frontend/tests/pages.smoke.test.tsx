@@ -55,6 +55,8 @@ vi.mock("C:/Users/User/Desktop/AI_legal2/frontend/lib/api-client.ts", () => ({
     getPilotMetricsSummary: vi.fn(async () => ({ totalCases: 3, completedHappyPathCases: 2, blockedCases: 1, totalFeedbackItems: 1, blockerFeedbackItems: 0, highFeedbackItems: 0, feedbackBySeverityTotal: { BLOCKER: 1, MEDIUM: 1 }, feedbackBySeverityUnresolved: { BLOCKER: 0, MEDIUM: 1 }, averagePretensionDraftMinutes: 10, averagePretensionDraftDataStatus: "ok", averageClaimDraftMinutes: 15, totalRagWarnings: 1, totalAuthorityWarnings: 0, totalAuthorityInvalids: 1, totalAuthorityChecks: 3, totalBlockedActions: 1, authority: { checksTotal: 3, validCount: 2, warningCount: 0, invalidCount: 1, blockedActionsCount: 1 }, authorityByCase: [{ caseId: "case-1003", title: "Authority blocked", checksTotal: 1, validCount: 0, warningCount: 0, invalidCount: 1, blockedActionsCount: 1 }], cases: [{ caseId: "case-1001", title: "Case", status: "COURT_PACKAGE_READY", factsReadyMinutes: 5, pretensionDraftMinutes: 10, pretensionReviewMinutes: 12, claimDraftMinutes: 15, claimReviewMinutes: 9, pretensionEdits: 1, claimEdits: 1, ragWarnings: 0, authorityWarnings: 0, authorityInvalids: 0, authorityChecksTotal: 1, authority: { checksTotal: 1, validCount: 1, warningCount: 0, invalidCount: 0, blockedActionsCount: 0 }, blockedActions: 0, feedbackItems: 0, pretensionDraftDataStatus: "ok" }] })),
     getPilotCaseTimeline: vi.fn(async () => [{ id: "timeline-1", caseId: "case-1001", eventType: "CASE_CREATED", title: "Case created", description: "Case", createdAt: "2026-05-29T10:00:00Z", actorUserId: "1", actorRole: "initiator", source: "case", severity: "info", relatedEntityType: "case", relatedEntityId: "1" }]),
     getPilotReport: vi.fn(async () => ({ period: "internal pilot", dateFrom: "2026-05-01", dateTo: "2026-05-31", totalCases: 3, caseStatuses: { COURT_PACKAGE_READY: 2 }, feedbackTotal: 1, feedbackBySeverityTotal: { BLOCKER: 1, MEDIUM: 1 }, feedbackBySeverityUnresolved: { BLOCKER: 0, MEDIUM: 1 }, averagePretensionDraftMinutes: 10, averagePretensionDraftDataStatus: "ok", averageClaimDraftMinutes: 15, aiRagWarnings: 1, authorityWarnings: 0, authorityInvalids: 1, authorityChecksTotal: 3, blockedActions: 1, exportsGenerated: 2, exportedCaseIds: ["case-1001", "case-1004"], unresolvedItems: [], timelineSummary: { CASE_CREATED: 3, CLAIM_APPROVED: 2 }, recommendation: "go" })),
+    getSandboxPilotMetrics: vi.fn(async () => ({ generatedAt: "2026-05-29T10:00:00Z", sandboxTestConnectionsTotal: 6, sandboxTestConnectionsSkipped: 3, sandboxTestConnectionsFailed: 0, sandboxDryRunsTotal: 5, sandboxDangerousOperationsBlocked: 2, credentialsMissingCount: 3, approvalRequiredCount: 0, approvalExpiredCount: 0, secretsLeakageFindings: 0, productionFlagsEnabledCount: 0, realSandboxCredentials: "absent", liveSandboxCalls: "safe-skipped" })),
+    getSandboxPilotReport: vi.fn(async () => ({ generatedAt: "2026-05-29T10:00:00Z", status: "PASSED_WITH_ISSUES", productionApi: "disabled", realSandboxCredentials: "absent", liveSandboxCalls: "safe-skipped", courtSubmission: "disabled", fns: { credentialsPresent: false, approvalActive: false, approvalStatus: "REQUESTED", approvalExpiresAt: null, testConnectionStatus: "credentials_missing", lastTestConnectionStatus: "credentials_missing", lastTestConnectionAt: "2026-05-29T10:00:00Z", lastErrorCode: "CREDENTIALS_MISSING", readyForSandbox: false, blockingReasons: ["sandbox_credentials_missing"] }, russianPost: { credentialsPresent: false, approvalActive: true, approvalStatus: "APPROVED", approvalExpiresAt: "2026-06-15T12:00:00Z", testConnectionStatus: "credentials_missing", lastTestConnectionStatus: "credentials_missing", lastTestConnectionAt: "2026-05-29T10:00:00Z", lastErrorCode: "CREDENTIALS_MISSING", readyForSandbox: false, blockingReasons: ["sandbox_credentials_missing"] }, courtArbitr: { credentialsPresent: false, approvalActive: false, approvalStatus: "REQUESTED", approvalExpiresAt: null, testConnectionStatus: "disabled", lastTestConnectionStatus: "disabled", lastTestConnectionAt: "2026-05-29T10:00:00Z", lastErrorCode: "SANDBOX_DISABLED", readyForSandbox: false, blockingReasons: ["sandbox_flag_disabled"] }, endToEndStatus: "ok", exportGenerated: true, auditOk: true, integrationLogsOk: true, secretsLeakage: "none", metrics: { generatedAt: "2026-05-29T10:00:00Z", sandboxTestConnectionsTotal: 6, sandboxTestConnectionsSkipped: 3, sandboxTestConnectionsFailed: 0, sandboxDryRunsTotal: 5, sandboxDangerousOperationsBlocked: 2, credentialsMissingCount: 3, approvalRequiredCount: 0, approvalExpiredCount: 0, secretsLeakageFindings: 0, productionFlagsEnabledCount: 0, realSandboxCredentials: "absent", liveSandboxCalls: "safe-skipped" }, issues: [{ severity: "MEDIUM", module: "CREDENTIALS", description: "Missing sandbox credentials", recommendation: "Request credentials" }], recommendation: "repeat with real sandbox credentials" })),
     testFnsConnection: vi.fn(async () => ({ provider: "fns", mode: "MOCK_FOR_DEV", status: "SUCCESS", ok: true, detail: "ok", externalCalls: false })),
     testRussianPostConnection: vi.fn(async () => ({ provider: "russian_post", mode: "MOCK_FOR_DEV", status: "SUCCESS", ok: true, detail: "ok", externalCalls: false })),
     testCourtArbitrConnection: vi.fn(async () => ({ provider: "court_arbitr", mode: "MOCK_FOR_DEV", status: "SUCCESS", ok: true, detail: "ok", externalCalls: false })),
@@ -144,5 +146,23 @@ describe("frontend sprint smoke pages", () => {
     const { default: Page } = await import("../app/settings/integrations/approvals/[id]/page");
     render(<Page />);
     await waitFor(() => expect(screen.getByTestId("integration-approval-detail-page")).toBeInTheDocument());
+  });
+
+  it("sandbox pilot settings page renders", async () => {
+    const { default: Page } = await import("../app/settings/integrations/sandbox-pilot/page");
+    render(<Page />);
+    await waitFor(() => expect(screen.getByTestId("sandbox-pilot-settings-page")).toBeInTheDocument());
+  });
+
+  it("sandbox pilot metrics page renders", async () => {
+    const { default: Page } = await import("../app/sandbox-pilot/metrics/page");
+    render(<Page />);
+    await waitFor(() => expect(screen.getByTestId("sandbox-pilot-metrics-page")).toBeInTheDocument());
+  });
+
+  it("sandbox pilot report page renders", async () => {
+    const { default: Page } = await import("../app/sandbox-pilot/report/page");
+    render(<Page />);
+    await waitFor(() => expect(screen.getByTestId("sandbox-pilot-report-page")).toBeInTheDocument());
   });
 });

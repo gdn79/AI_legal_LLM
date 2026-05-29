@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from app.api.routes import audit, auth, cases, claims, checklists, court_arbitr, court_import, court_submission, dashboard, documents, employees, export, external_court_cases, extraction, fns, health, integration_approvals, integration_logs, integration_readiness, organizations, pilot_feedback, pilot_metrics, postal_dispatches, powers_of_attorney, pretensions, rag, russian_post, settings, signatories, system, users, workflow
+from app.api.routes import audit, auth, cases, claims, checklists, court_arbitr, court_import, court_submission, dashboard, documents, employees, export, external_court_cases, extraction, fns, health, integration_approvals, integration_logs, integration_readiness, organizations, pilot_feedback, pilot_metrics, postal_dispatches, powers_of_attorney, pretensions, rag, russian_post, sandbox_pilot, settings, signatories, system, users, workflow
 
 api_router = APIRouter()
 api_router.include_router(health.router)
@@ -33,5 +33,6 @@ api_router.include_router(audit.router)
 api_router.include_router(dashboard.router)
 api_router.include_router(pilot_feedback.router)
 api_router.include_router(pilot_metrics.router)
+api_router.include_router(sandbox_pilot.router)
 api_router.include_router(export.router)
 api_router.include_router(settings.router)

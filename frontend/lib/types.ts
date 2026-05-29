@@ -216,6 +216,9 @@ export type SandboxReadinessItem = {
   approvalStatus: string;
   activeApproval?: boolean;
   approvalExpiresAt?: string | null;
+  lastTestConnectionStatus?: string | null;
+  lastTestConnectionAt?: string | null;
+  lastErrorCode?: string | null;
 };
 
 export type SandboxReadiness = {
@@ -233,6 +236,62 @@ export type IntegrationCredentialsStatus = {
   fns: IntegrationCredentialsStatusItem;
   russianPost: IntegrationCredentialsStatusItem;
   courtArbitr: IntegrationCredentialsStatusItem;
+};
+
+export type SandboxPilotMetrics = {
+  generatedAt: string;
+  sandboxTestConnectionsTotal: number;
+  sandboxTestConnectionsSkipped: number;
+  sandboxTestConnectionsFailed: number;
+  sandboxDryRunsTotal: number;
+  sandboxDangerousOperationsBlocked: number;
+  credentialsMissingCount: number;
+  approvalRequiredCount: number;
+  approvalExpiredCount: number;
+  secretsLeakageFindings: number;
+  productionFlagsEnabledCount: number;
+  realSandboxCredentials: string;
+  liveSandboxCalls: string;
+};
+
+export type SandboxPilotIntegrationCheck = {
+  credentialsPresent: boolean;
+  approvalActive: boolean;
+  approvalStatus: string;
+  approvalExpiresAt?: string | null;
+  testConnectionStatus: string;
+  lastTestConnectionStatus?: string | null;
+  lastTestConnectionAt?: string | null;
+  lastErrorCode?: string | null;
+  readyForSandbox: boolean;
+  blockingReasons: string[];
+};
+
+export type SandboxPilotIssue = {
+  severity: string;
+  module: string;
+  description: string;
+  recommendation: string;
+};
+
+export type SandboxPilotReport = {
+  generatedAt: string;
+  status: string;
+  productionApi: string;
+  realSandboxCredentials: string;
+  liveSandboxCalls: string;
+  courtSubmission: string;
+  fns: SandboxPilotIntegrationCheck;
+  russianPost: SandboxPilotIntegrationCheck;
+  courtArbitr: SandboxPilotIntegrationCheck;
+  endToEndStatus: string;
+  exportGenerated: boolean;
+  auditOk: boolean;
+  integrationLogsOk: boolean;
+  secretsLeakage: string;
+  metrics: SandboxPilotMetrics;
+  issues: SandboxPilotIssue[];
+  recommendation: string;
 };
 
 export type IntegrationApproval = {

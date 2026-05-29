@@ -50,3 +50,13 @@ class PostalProofCheckRead(BaseModel):
     case_id: int
     has_claim_copy_proof: bool
     dispatch_ids: list[int]
+
+
+class AddressNormalizationRequest(BaseModel):
+    address: str
+
+
+class AddressNormalizationResultRead(BaseModel):
+    normalized_address: str
+    status: str
+    source: str

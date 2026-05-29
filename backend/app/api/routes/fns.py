@@ -76,6 +76,9 @@ def test_fns_connection(
         }
     else:
         result = adapter.test_connection()
+        if sandbox:
+            result["sandbox"] = True
+            result["credentials_present"] = sandbox_service.credentials_present("fns")
     integration.finish_log(
         entry,
         status="SUCCESS" if result["ok"] else "FAILED",

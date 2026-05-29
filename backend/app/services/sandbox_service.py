@@ -149,6 +149,7 @@ class SandboxService:
         approval_status = self.approval_status(integration_name)
         approval = self.latest_approval(integration_name)
         last_log = self.integration.latest_log(integration_name=integration_name, operation="test_connection")
+        last_failed_log = self.integration.latest_log(integration_name=integration_name, status="FAILED")
         if not flag:
             test_connection_status = "disabled"
         elif not credentials_present:
@@ -181,6 +182,9 @@ class SandboxService:
             approval_status=approval_status,
             active_approval=approval_status == IntegrationApprovalStatus.APPROVED.value,
             approval_expires_at=approval.expires_at if approval is not None else None,
+            last_test_connection_status=None if last_log is None else ("ok" if last_log.status == "SUCCESS" else "failed"),
+            last_test_connection_at=None if last_log is None else (last_log.finished_at or last_log.created_at),
+            last_error_code=None if last_failed_log is None else (last_failed_log.error_code or None),
         )
 
     def readiness(self) -> SandboxReadinessRead:

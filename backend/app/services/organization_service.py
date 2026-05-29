@@ -35,12 +35,12 @@ class OrganizationService:
         self.settings = get_settings()
         self.storage = LocalStorageService()
 
-    def lookup_preview(self, inn: str) -> dict:
-        payload = self._lookup_fns_payload(inn)
+    def lookup_preview(self, inn: str, *, sandbox: bool = False, dry_run: bool = True) -> dict:
+        payload = self._lookup_fns_payload(inn, sandbox=sandbox, dry_run=dry_run)
         return payload
 
-    def create_or_refresh_by_inn(self, inn: str) -> Organization:
-        payload = self._lookup_fns_payload(inn)
+    def create_or_refresh_by_inn(self, inn: str, *, sandbox: bool = False, dry_run: bool = False) -> Organization:
+        payload = self._lookup_fns_payload(inn, sandbox=sandbox, dry_run=dry_run)
         organization = self.db.scalar(select(Organization).where(Organization.inn == inn))
         existing_payload = None
         if organization is None:
@@ -66,7 +66,7 @@ class OrganizationService:
 
     def refresh_organization(self, organization_id: int) -> Organization:
         organization = self.get_organization(organization_id)
-        payload = self._lookup_fns_payload(organization.inn)
+        payload = self._lookup_fns_payload(organization.inn, sandbox=False, dry_run=False)
         self._apply_fns_payload(organization, payload)
         self._create_snapshot(organization, payload)
         self._create_lookup_log(organization, organization.inn, payload)
@@ -325,10 +325,10 @@ class OrganizationService:
             return PowerOfAttorneyStatus.EXPIRED.value
         return PowerOfAttorneyStatus.ACTIVE.value
 
-    def _lookup_fns_payload(self, inn: str) -> dict:
-        mode = self.settings.fns_provider_mode
+    def _lookup_fns_payload(self, inn: str, *, sandbox: bool = False, dry_run: bool = True) -> dict:
+        mode = "FNS_SANDBOX_READY" if sandbox else self.settings.fns_provider_mode
         if mode == "FNS_SANDBOX_READY":
-            sandbox = SandboxService(self.db)
+            sandbox_service = SandboxService(self.db)
             if not self.settings.enable_fns_sandbox:
                 raise integration_http_error(
                     status_code=status.HTTP_409_CONFLICT,
@@ -342,7 +342,7 @@ class OrganizationService:
                     manual_action_required=True,
                     details_safe_json={"enable_fns_sandbox": self.settings.enable_fns_sandbox},
                 )
-            if not sandbox.credentials_present("fns"):
+            if not sandbox_service.credentials_present("fns"):
                 raise integration_http_error(
                     status_code=status.HTTP_409_CONFLICT,
                     integration_name="fns",
@@ -355,7 +355,7 @@ class OrganizationService:
                     manual_action_required=True,
                     details_safe_json={"credentials_present": False},
                 )
-            if not sandbox.has_active_approval("fns"):
+            if not sandbox_service.has_active_approval("fns"):
                 raise integration_http_error(
                     status_code=status.HTTP_409_CONFLICT,
                     integration_name="fns",
@@ -366,9 +366,11 @@ class OrganizationService:
                     safe_message="FNS sandbox approval is required before sandbox lookup.",
                     retryable=False,
                     manual_action_required=True,
-                    details_safe_json={"approval_status": sandbox.approval_status("fns")},
+                    details_safe_json={"approval_status": sandbox_service.approval_status("fns")},
                 )
         adapter = get_fns_company_adapter(mode)
+        if mode == "FNS_SANDBOX_READY" and hasattr(adapter, "lookup_by_inn"):
+            return adapter.lookup_by_inn(inn, dry_run=dry_run)
         return adapter.lookup_company(inn)
 
     def _apply_fns_payload(self, organization: Organization, payload: dict) -> None:

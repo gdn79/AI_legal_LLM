@@ -9,7 +9,7 @@
     "result": "PASSED",
     "reason": "Authority confirmed by power of attorney POA-EXPORT",
     "power_of_attorney_id": 1,
-    "checked_at": "2026-05-29T15:35:40.567413"
+    "checked_at": "2026-05-29T16:37:19.362779"
   },
   {
     "id": 2,
@@ -21,7 +21,7 @@
     "result": "PASSED",
     "reason": "Authority confirmed by power of attorney POA-EXPORT",
     "power_of_attorney_id": 1,
-    "checked_at": "2026-05-29T15:35:40.530404"
+    "checked_at": "2026-05-29T16:37:19.322768"
   },
   {
     "id": 1,
@@ -32,6 +32,6 @@
     "result": "PASSED",
     "reason": "Authority confirmed by power of attorney POA-EXPORT",
     "power_of_attorney_id": 1,
-    "checked_at": "2026-05-29T15:35:40.520402"
+    "checked_at": "2026-05-29T16:37:19.311197"
   }
 ]

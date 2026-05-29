@@ -32,6 +32,8 @@ import type {
   RagCitation,
   RagSource,
   Role,
+  SandboxPilotMetrics,
+  SandboxPilotReport,
   SandboxReadiness,
   SettingItem,
   Signatory,
@@ -58,6 +60,8 @@ import {
   mockPilotMetricsSummary,
   mockPilotReport,
   mockPilotTimelines,
+  mockSandboxPilotMetrics,
+  mockSandboxPilotReport,
   mockPostalDispatches,
   mockPostalProofChecks,
   mockPowersOfAttorney,
@@ -273,6 +277,9 @@ async function mockRequest<T>(path: string, init?: RequestInit): Promise<T> {
         approval_status: mockSandboxReadiness.fns.approvalStatus,
         active_approval: mockSandboxReadiness.fns.activeApproval ?? false,
         approval_expires_at: mockSandboxReadiness.fns.approvalExpiresAt ?? null,
+        last_test_connection_status: mockSandboxReadiness.fns.lastTestConnectionStatus ?? null,
+        last_test_connection_at: mockSandboxReadiness.fns.lastTestConnectionAt ?? null,
+        last_error_code: mockSandboxReadiness.fns.lastErrorCode ?? null,
       },
       russian_post: {
         sandbox_flag: mockSandboxReadiness.russianPost.sandboxFlag,
@@ -285,6 +292,9 @@ async function mockRequest<T>(path: string, init?: RequestInit): Promise<T> {
         approval_status: mockSandboxReadiness.russianPost.approvalStatus,
         active_approval: mockSandboxReadiness.russianPost.activeApproval ?? false,
         approval_expires_at: mockSandboxReadiness.russianPost.approvalExpiresAt ?? null,
+        last_test_connection_status: mockSandboxReadiness.russianPost.lastTestConnectionStatus ?? null,
+        last_test_connection_at: mockSandboxReadiness.russianPost.lastTestConnectionAt ?? null,
+        last_error_code: mockSandboxReadiness.russianPost.lastErrorCode ?? null,
       },
       court: {
         sandbox_flag: mockSandboxReadiness.court.sandboxFlag,
@@ -297,6 +307,9 @@ async function mockRequest<T>(path: string, init?: RequestInit): Promise<T> {
         approval_status: mockSandboxReadiness.court.approvalStatus,
         active_approval: mockSandboxReadiness.court.activeApproval ?? false,
         approval_expires_at: mockSandboxReadiness.court.approvalExpiresAt ?? null,
+        last_test_connection_status: mockSandboxReadiness.court.lastTestConnectionStatus ?? null,
+        last_test_connection_at: mockSandboxReadiness.court.lastTestConnectionAt ?? null,
+        last_error_code: mockSandboxReadiness.court.lastErrorCode ?? null,
       },
     } as T;
   }
@@ -314,6 +327,91 @@ async function mockRequest<T>(path: string, init?: RequestInit): Promise<T> {
         sandbox_credentials_present: mockIntegrationCredentialsStatus.courtArbitr.sandboxCredentialsPresent,
         production_credentials_present: mockIntegrationCredentialsStatus.courtArbitr.productionCredentialsPresent,
       },
+    } as T;
+  }
+  if (path === "/sandbox-pilot/metrics") {
+    return {
+      generated_at: mockSandboxPilotMetrics.generatedAt,
+      sandbox_test_connections_total: mockSandboxPilotMetrics.sandboxTestConnectionsTotal,
+      sandbox_test_connections_skipped: mockSandboxPilotMetrics.sandboxTestConnectionsSkipped,
+      sandbox_test_connections_failed: mockSandboxPilotMetrics.sandboxTestConnectionsFailed,
+      sandbox_dry_runs_total: mockSandboxPilotMetrics.sandboxDryRunsTotal,
+      sandbox_dangerous_operations_blocked: mockSandboxPilotMetrics.sandboxDangerousOperationsBlocked,
+      credentials_missing_count: mockSandboxPilotMetrics.credentialsMissingCount,
+      approval_required_count: mockSandboxPilotMetrics.approvalRequiredCount,
+      approval_expired_count: mockSandboxPilotMetrics.approvalExpiredCount,
+      secrets_leakage_findings: mockSandboxPilotMetrics.secretsLeakageFindings,
+      production_flags_enabled_count: mockSandboxPilotMetrics.productionFlagsEnabledCount,
+      real_sandbox_credentials: mockSandboxPilotMetrics.realSandboxCredentials,
+      live_sandbox_calls: mockSandboxPilotMetrics.liveSandboxCalls,
+    } as T;
+  }
+  if (path === "/sandbox-pilot/report") {
+    return {
+      generated_at: mockSandboxPilotReport.generatedAt,
+      status: mockSandboxPilotReport.status,
+      production_api: mockSandboxPilotReport.productionApi,
+      real_sandbox_credentials: mockSandboxPilotReport.realSandboxCredentials,
+      live_sandbox_calls: mockSandboxPilotReport.liveSandboxCalls,
+      court_submission: mockSandboxPilotReport.courtSubmission,
+      fns: {
+        credentials_present: mockSandboxPilotReport.fns.credentialsPresent,
+        approval_active: mockSandboxPilotReport.fns.approvalActive,
+        approval_status: mockSandboxPilotReport.fns.approvalStatus,
+        approval_expires_at: mockSandboxPilotReport.fns.approvalExpiresAt ?? null,
+        test_connection_status: mockSandboxPilotReport.fns.testConnectionStatus,
+        last_test_connection_status: mockSandboxPilotReport.fns.lastTestConnectionStatus ?? null,
+        last_test_connection_at: mockSandboxPilotReport.fns.lastTestConnectionAt ?? null,
+        last_error_code: mockSandboxPilotReport.fns.lastErrorCode ?? null,
+        ready_for_sandbox: mockSandboxPilotReport.fns.readyForSandbox,
+        blocking_reasons: mockSandboxPilotReport.fns.blockingReasons,
+      },
+      russian_post: {
+        credentials_present: mockSandboxPilotReport.russianPost.credentialsPresent,
+        approval_active: mockSandboxPilotReport.russianPost.approvalActive,
+        approval_status: mockSandboxPilotReport.russianPost.approvalStatus,
+        approval_expires_at: mockSandboxPilotReport.russianPost.approvalExpiresAt ?? null,
+        test_connection_status: mockSandboxPilotReport.russianPost.testConnectionStatus,
+        last_test_connection_status: mockSandboxPilotReport.russianPost.lastTestConnectionStatus ?? null,
+        last_test_connection_at: mockSandboxPilotReport.russianPost.lastTestConnectionAt ?? null,
+        last_error_code: mockSandboxPilotReport.russianPost.lastErrorCode ?? null,
+        ready_for_sandbox: mockSandboxPilotReport.russianPost.readyForSandbox,
+        blocking_reasons: mockSandboxPilotReport.russianPost.blockingReasons,
+      },
+      court_arbitr: {
+        credentials_present: mockSandboxPilotReport.courtArbitr.credentialsPresent,
+        approval_active: mockSandboxPilotReport.courtArbitr.approvalActive,
+        approval_status: mockSandboxPilotReport.courtArbitr.approvalStatus,
+        approval_expires_at: mockSandboxPilotReport.courtArbitr.approvalExpiresAt ?? null,
+        test_connection_status: mockSandboxPilotReport.courtArbitr.testConnectionStatus,
+        last_test_connection_status: mockSandboxPilotReport.courtArbitr.lastTestConnectionStatus ?? null,
+        last_test_connection_at: mockSandboxPilotReport.courtArbitr.lastTestConnectionAt ?? null,
+        last_error_code: mockSandboxPilotReport.courtArbitr.lastErrorCode ?? null,
+        ready_for_sandbox: mockSandboxPilotReport.courtArbitr.readyForSandbox,
+        blocking_reasons: mockSandboxPilotReport.courtArbitr.blockingReasons,
+      },
+      end_to_end_status: mockSandboxPilotReport.endToEndStatus,
+      export_generated: mockSandboxPilotReport.exportGenerated,
+      audit_ok: mockSandboxPilotReport.auditOk,
+      integration_logs_ok: mockSandboxPilotReport.integrationLogsOk,
+      secrets_leakage: mockSandboxPilotReport.secretsLeakage,
+      metrics: {
+        generated_at: mockSandboxPilotReport.metrics.generatedAt,
+        sandbox_test_connections_total: mockSandboxPilotReport.metrics.sandboxTestConnectionsTotal,
+        sandbox_test_connections_skipped: mockSandboxPilotReport.metrics.sandboxTestConnectionsSkipped,
+        sandbox_test_connections_failed: mockSandboxPilotReport.metrics.sandboxTestConnectionsFailed,
+        sandbox_dry_runs_total: mockSandboxPilotReport.metrics.sandboxDryRunsTotal,
+        sandbox_dangerous_operations_blocked: mockSandboxPilotReport.metrics.sandboxDangerousOperationsBlocked,
+        credentials_missing_count: mockSandboxPilotReport.metrics.credentialsMissingCount,
+        approval_required_count: mockSandboxPilotReport.metrics.approvalRequiredCount,
+        approval_expired_count: mockSandboxPilotReport.metrics.approvalExpiredCount,
+        secrets_leakage_findings: mockSandboxPilotReport.metrics.secretsLeakageFindings,
+        production_flags_enabled_count: mockSandboxPilotReport.metrics.productionFlagsEnabledCount,
+        real_sandbox_credentials: mockSandboxPilotReport.metrics.realSandboxCredentials,
+        live_sandbox_calls: mockSandboxPilotReport.metrics.liveSandboxCalls,
+      },
+      issues: mockSandboxPilotReport.issues.map((item) => ({ ...item })),
+      recommendation: mockSandboxPilotReport.recommendation,
     } as T;
   }
   if (path === "/integration-approvals/active" && (!init || init.method === "GET")) {
@@ -1314,9 +1412,9 @@ export const apiClient = {
   },
   async getSandboxReadiness() {
     const item = await request<{
-      fns: { sandbox_flag: boolean; credentials_present: boolean; test_connection_status: string; ready_for_sandbox: boolean; blocking_reasons: string[]; mode: string; provider: string; approval_status: string; active_approval?: boolean; approval_expires_at?: string | null };
-      russian_post: { sandbox_flag: boolean; credentials_present: boolean; test_connection_status: string; ready_for_sandbox: boolean; blocking_reasons: string[]; mode: string; provider: string; approval_status: string; active_approval?: boolean; approval_expires_at?: string | null };
-      court: { sandbox_flag: boolean; credentials_present: boolean; test_connection_status: string; ready_for_sandbox: boolean; blocking_reasons: string[]; mode: string; provider: string; approval_status: string; active_approval?: boolean; approval_expires_at?: string | null };
+      fns: { sandbox_flag: boolean; credentials_present: boolean; test_connection_status: string; ready_for_sandbox: boolean; blocking_reasons: string[]; mode: string; provider: string; approval_status: string; active_approval?: boolean; approval_expires_at?: string | null; last_test_connection_status?: string | null; last_test_connection_at?: string | null; last_error_code?: string | null };
+      russian_post: { sandbox_flag: boolean; credentials_present: boolean; test_connection_status: string; ready_for_sandbox: boolean; blocking_reasons: string[]; mode: string; provider: string; approval_status: string; active_approval?: boolean; approval_expires_at?: string | null; last_test_connection_status?: string | null; last_test_connection_at?: string | null; last_error_code?: string | null };
+      court: { sandbox_flag: boolean; credentials_present: boolean; test_connection_status: string; ready_for_sandbox: boolean; blocking_reasons: string[]; mode: string; provider: string; approval_status: string; active_approval?: boolean; approval_expires_at?: string | null; last_test_connection_status?: string | null; last_test_connection_at?: string | null; last_error_code?: string | null };
     }>("/integration-readiness/sandbox");
     return {
       fns: {
@@ -1330,6 +1428,9 @@ export const apiClient = {
         approvalStatus: item.fns.approval_status,
         activeApproval: item.fns.active_approval ?? false,
         approvalExpiresAt: item.fns.approval_expires_at ?? null,
+        lastTestConnectionStatus: item.fns.last_test_connection_status ?? null,
+        lastTestConnectionAt: item.fns.last_test_connection_at ?? null,
+        lastErrorCode: item.fns.last_error_code ?? null,
       },
       russianPost: {
         sandboxFlag: item.russian_post.sandbox_flag,
@@ -1342,6 +1443,9 @@ export const apiClient = {
         approvalStatus: item.russian_post.approval_status,
         activeApproval: item.russian_post.active_approval ?? false,
         approvalExpiresAt: item.russian_post.approval_expires_at ?? null,
+        lastTestConnectionStatus: item.russian_post.last_test_connection_status ?? null,
+        lastTestConnectionAt: item.russian_post.last_test_connection_at ?? null,
+        lastErrorCode: item.russian_post.last_error_code ?? null,
       },
       court: {
         sandboxFlag: item.court.sandbox_flag,
@@ -1354,6 +1458,9 @@ export const apiClient = {
         approvalStatus: item.court.approval_status,
         activeApproval: item.court.active_approval ?? false,
         approvalExpiresAt: item.court.approval_expires_at ?? null,
+        lastTestConnectionStatus: item.court.last_test_connection_status ?? null,
+        lastTestConnectionAt: item.court.last_test_connection_at ?? null,
+        lastErrorCode: item.court.last_error_code ?? null,
       },
     } satisfies SandboxReadiness;
   },
@@ -1662,6 +1769,172 @@ export const apiClient = {
       timelineSummary: item.timeline_summary,
       recommendation: item.recommendation,
     } satisfies PilotReport;
+  },
+  async getSandboxPilotMetrics() {
+    const item = await request<{
+      generated_at: string;
+      sandbox_test_connections_total: number;
+      sandbox_test_connections_skipped: number;
+      sandbox_test_connections_failed: number;
+      sandbox_dry_runs_total: number;
+      sandbox_dangerous_operations_blocked: number;
+      credentials_missing_count: number;
+      approval_required_count: number;
+      approval_expired_count: number;
+      secrets_leakage_findings: number;
+      production_flags_enabled_count: number;
+      real_sandbox_credentials: string;
+      live_sandbox_calls: string;
+    }>("/sandbox-pilot/metrics");
+    return {
+      generatedAt: item.generated_at,
+      sandboxTestConnectionsTotal: item.sandbox_test_connections_total,
+      sandboxTestConnectionsSkipped: item.sandbox_test_connections_skipped,
+      sandboxTestConnectionsFailed: item.sandbox_test_connections_failed,
+      sandboxDryRunsTotal: item.sandbox_dry_runs_total,
+      sandboxDangerousOperationsBlocked: item.sandbox_dangerous_operations_blocked,
+      credentialsMissingCount: item.credentials_missing_count,
+      approvalRequiredCount: item.approval_required_count,
+      approvalExpiredCount: item.approval_expired_count,
+      secretsLeakageFindings: item.secrets_leakage_findings,
+      productionFlagsEnabledCount: item.production_flags_enabled_count,
+      realSandboxCredentials: item.real_sandbox_credentials,
+      liveSandboxCalls: item.live_sandbox_calls,
+    } satisfies SandboxPilotMetrics;
+  },
+  async getSandboxPilotReport() {
+    const item = await request<{
+      generated_at: string;
+      status: string;
+      production_api: string;
+      real_sandbox_credentials: string;
+      live_sandbox_calls: string;
+      court_submission: string;
+      fns: {
+        credentials_present: boolean;
+        approval_active: boolean;
+        approval_status: string;
+        approval_expires_at: string | null;
+        test_connection_status: string;
+        last_test_connection_status: string | null;
+        last_test_connection_at: string | null;
+        last_error_code: string | null;
+        ready_for_sandbox: boolean;
+        blocking_reasons: string[];
+      };
+      russian_post: {
+        credentials_present: boolean;
+        approval_active: boolean;
+        approval_status: string;
+        approval_expires_at: string | null;
+        test_connection_status: string;
+        last_test_connection_status: string | null;
+        last_test_connection_at: string | null;
+        last_error_code: string | null;
+        ready_for_sandbox: boolean;
+        blocking_reasons: string[];
+      };
+      court_arbitr: {
+        credentials_present: boolean;
+        approval_active: boolean;
+        approval_status: string;
+        approval_expires_at: string | null;
+        test_connection_status: string;
+        last_test_connection_status: string | null;
+        last_test_connection_at: string | null;
+        last_error_code: string | null;
+        ready_for_sandbox: boolean;
+        blocking_reasons: string[];
+      };
+      end_to_end_status: string;
+      export_generated: boolean;
+      audit_ok: boolean;
+      integration_logs_ok: boolean;
+      secrets_leakage: string;
+      metrics: {
+        generated_at: string;
+        sandbox_test_connections_total: number;
+        sandbox_test_connections_skipped: number;
+        sandbox_test_connections_failed: number;
+        sandbox_dry_runs_total: number;
+        sandbox_dangerous_operations_blocked: number;
+        credentials_missing_count: number;
+        approval_required_count: number;
+        approval_expired_count: number;
+        secrets_leakage_findings: number;
+        production_flags_enabled_count: number;
+        real_sandbox_credentials: string;
+        live_sandbox_calls: string;
+      };
+      issues: Array<{ severity: string; module: string; description: string; recommendation: string }>;
+      recommendation: string;
+    }>("/sandbox-pilot/report");
+    return {
+      generatedAt: item.generated_at,
+      status: item.status,
+      productionApi: item.production_api,
+      realSandboxCredentials: item.real_sandbox_credentials,
+      liveSandboxCalls: item.live_sandbox_calls,
+      courtSubmission: item.court_submission,
+      fns: {
+        credentialsPresent: item.fns.credentials_present,
+        approvalActive: item.fns.approval_active,
+        approvalStatus: item.fns.approval_status,
+        approvalExpiresAt: item.fns.approval_expires_at,
+        testConnectionStatus: item.fns.test_connection_status,
+        lastTestConnectionStatus: item.fns.last_test_connection_status,
+        lastTestConnectionAt: item.fns.last_test_connection_at,
+        lastErrorCode: item.fns.last_error_code,
+        readyForSandbox: item.fns.ready_for_sandbox,
+        blockingReasons: item.fns.blocking_reasons,
+      },
+      russianPost: {
+        credentialsPresent: item.russian_post.credentials_present,
+        approvalActive: item.russian_post.approval_active,
+        approvalStatus: item.russian_post.approval_status,
+        approvalExpiresAt: item.russian_post.approval_expires_at,
+        testConnectionStatus: item.russian_post.test_connection_status,
+        lastTestConnectionStatus: item.russian_post.last_test_connection_status,
+        lastTestConnectionAt: item.russian_post.last_test_connection_at,
+        lastErrorCode: item.russian_post.last_error_code,
+        readyForSandbox: item.russian_post.ready_for_sandbox,
+        blockingReasons: item.russian_post.blocking_reasons,
+      },
+      courtArbitr: {
+        credentialsPresent: item.court_arbitr.credentials_present,
+        approvalActive: item.court_arbitr.approval_active,
+        approvalStatus: item.court_arbitr.approval_status,
+        approvalExpiresAt: item.court_arbitr.approval_expires_at,
+        testConnectionStatus: item.court_arbitr.test_connection_status,
+        lastTestConnectionStatus: item.court_arbitr.last_test_connection_status,
+        lastTestConnectionAt: item.court_arbitr.last_test_connection_at,
+        lastErrorCode: item.court_arbitr.last_error_code,
+        readyForSandbox: item.court_arbitr.ready_for_sandbox,
+        blockingReasons: item.court_arbitr.blocking_reasons,
+      },
+      endToEndStatus: item.end_to_end_status,
+      exportGenerated: item.export_generated,
+      auditOk: item.audit_ok,
+      integrationLogsOk: item.integration_logs_ok,
+      secretsLeakage: item.secrets_leakage,
+      metrics: {
+        generatedAt: item.metrics.generated_at,
+        sandboxTestConnectionsTotal: item.metrics.sandbox_test_connections_total,
+        sandboxTestConnectionsSkipped: item.metrics.sandbox_test_connections_skipped,
+        sandboxTestConnectionsFailed: item.metrics.sandbox_test_connections_failed,
+        sandboxDryRunsTotal: item.metrics.sandbox_dry_runs_total,
+        sandboxDangerousOperationsBlocked: item.metrics.sandbox_dangerous_operations_blocked,
+        credentialsMissingCount: item.metrics.credentials_missing_count,
+        approvalRequiredCount: item.metrics.approval_required_count,
+        approvalExpiredCount: item.metrics.approval_expired_count,
+        secretsLeakageFindings: item.metrics.secrets_leakage_findings,
+        productionFlagsEnabledCount: item.metrics.production_flags_enabled_count,
+        realSandboxCredentials: item.metrics.real_sandbox_credentials,
+        liveSandboxCalls: item.metrics.live_sandbox_calls,
+      },
+      issues: item.issues.map((entry) => ({ ...entry })),
+      recommendation: item.recommendation,
+    } satisfies SandboxPilotReport;
   },
   async listIntegrationLogs(integrationName?: string, operation?: string, status?: string) {
     const params = new URLSearchParams();

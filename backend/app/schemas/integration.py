@@ -82,6 +82,9 @@ class SandboxReadinessItemRead(BaseModel):
     approval_status: str
     active_approval: bool = False
     approval_expires_at: datetime | None = None
+    last_test_connection_status: str | None = None
+    last_test_connection_at: datetime | None = None
+    last_error_code: str | None = None
 
 
 class SandboxReadinessRead(BaseModel):

@@ -1,14 +1,14 @@
 {
   "id": 1,
-  "inn": "7702234567",
-  "kpp": "77014567",
-  "ogrn": "10277004567",
-  "short_name": "Mock Org 4567",
-  "full_name": "Mock Organization 4567",
-  "legal_address": "Moscow, Test street, 18",
-  "director_name": "Director 4567",
-  "director_position": "General Director",
+  "inn": "7701234567",
+  "kpp": "770101001",
+  "ogrn": "1027700123456",
+  "short_name": "ООО Альфа",
+  "full_name": "Общество с ограниченной ответственностью Альфа",
+  "legal_address": "г. Москва, ул. Демонстрационная, д. 1",
+  "director_name": "Иванов И.И.",
+  "director_position": "Генеральный директор",
   "review_status": "VERIFIED",
   "source": "MOCK_FNS_PROVIDER",
-  "actual_at": "2026-05-29T15:35:32.639224"
+  "actual_at": "2026-05-29T10:36:33.814647"
 }

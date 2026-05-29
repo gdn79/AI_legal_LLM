@@ -29,6 +29,15 @@ def override_get_db() -> Generator[Session, None, None]:
 app.dependency_overrides[get_db] = override_get_db
 
 
+def pytest_addoption(parser):
+    parser.addoption(
+        "--run-sandbox",
+        action="store_true",
+        default=False,
+        help="Run live sandbox credential checks when credentials are present.",
+    )
+
+
 @pytest.fixture(autouse=True)
 def setup_db():
     Base.metadata.drop_all(bind=engine)
@@ -99,3 +108,8 @@ def auth_headers(client: TestClient, seed_users: dict[str, dict[str, str]]) -> C
 @pytest.fixture
 def sample_documents_dir() -> Path:
     return Path(__file__).parent / "fixtures" / "documents"
+
+
+@pytest.fixture
+def run_sandbox_live(request) -> bool:
+    return bool(request.config.getoption("--run-sandbox"))

@@ -1,0 +1,5 @@
+case_id=2
+organization_id=1
+external_case_uid=
+note=sandbox pilot
+submission_mode=MANUAL_ONLY

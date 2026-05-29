@@ -74,6 +74,9 @@ def test_court_connection(
         }
     else:
         result = adapter.test_connection()
+        if sandbox:
+            result["sandbox"] = True
+            result["credentials_present"] = sandbox_service.credentials_present("court")
     integration.finish_log(
         entry,
         status="SUCCESS" if result["ok"] else "FAILED",
@@ -96,18 +99,21 @@ def test_court_connection(
 @router.post("/jobs", response_model=CourtImportJobRead)
 def create_job(
     payload: CourtImportJobCreate,
+    sandbox: bool = Query(default=False),
+    dry_run: bool = Query(default=False),
     current_user: User = Depends(require_role(RoleName.admin, RoleName.lawyer)),
     db: Session = Depends(get_db),
     request_id: str = Depends(get_request_id),
 ):
+    provider_mode = "COURT_SANDBOX_READY" if sandbox else payload.provider_mode
     integration = IntegrationService(db)
     entry = integration.create_log(
         integration_name="court_arbitr",
         provider=get_settings().court_arbitr_provider,
-        mode=payload.provider_mode or get_settings().court_provider_mode,
+        mode=provider_mode or get_settings().court_provider_mode,
         operation="import_cases_by_period",
         request_id=request_id,
-        idempotency_key=f"{payload.organization_id}:{payload.inn}:{payload.date_from}:{payload.date_to}:{payload.participation_role}:{payload.provider_mode or get_settings().court_provider_mode}",
+        idempotency_key=f"{payload.organization_id}:{payload.inn}:{payload.date_from}:{payload.date_to}:{payload.participation_role}:{provider_mode or get_settings().court_provider_mode}:{dry_run}",
         created_by_id=current_user.id,
         organization_id=payload.organization_id,
         safe_request_metadata={
@@ -115,6 +121,8 @@ def create_job(
             "date_from": payload.date_from.isoformat(),
             "date_to": payload.date_to.isoformat(),
             "participation_role": payload.participation_role,
+            "sandbox": sandbox,
+            "dry_run": dry_run or payload.dry_run,
         },
     )
     try:
@@ -124,7 +132,8 @@ def create_job(
             date_from=payload.date_from,
             date_to=payload.date_to,
             participation_role=payload.participation_role,
-            provider_mode=payload.provider_mode,
+            provider_mode=provider_mode,
+            dry_run=dry_run or payload.dry_run,
             current_user=current_user,
         )
     except HTTPException as exc:

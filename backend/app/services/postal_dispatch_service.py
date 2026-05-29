@@ -161,6 +161,58 @@ class PostalDispatchService:
             },
         }
 
+    def normalize_address(self, address: str, *, sandbox: bool = False) -> dict:
+        mode = "RUSSIAN_POST_SANDBOX_READY" if sandbox else self.settings.russian_post_mode
+        sandbox_service = SandboxService(self.db)
+        if mode == "RUSSIAN_POST_SANDBOX_READY":
+            if not self.settings.enable_russian_post_sandbox:
+                raise integration_http_error(
+                    status_code=status.HTTP_409_CONFLICT,
+                    integration_name="russian_post",
+                    operation="normalize_address",
+                    provider=self.settings.russian_post_provider,
+                    mode=mode,
+                    error_code="POST_SANDBOX_DISABLED",
+                    safe_message="Russian Post sandbox is disabled by feature flag.",
+                    retryable=False,
+                    manual_action_required=True,
+                    details_safe_json={"enable_russian_post_sandbox": self.settings.enable_russian_post_sandbox},
+                )
+            if not sandbox_service.credentials_present("russian_post"):
+                raise integration_http_error(
+                    status_code=status.HTTP_409_CONFLICT,
+                    integration_name="russian_post",
+                    operation="normalize_address",
+                    provider=self.settings.russian_post_provider,
+                    mode=mode,
+                    error_code="POST_SANDBOX_CREDENTIALS_MISSING",
+                    safe_message="Russian Post sandbox credentials are not configured.",
+                    retryable=False,
+                    manual_action_required=True,
+                    details_safe_json={"credentials_present": False},
+                )
+            if not sandbox_service.has_active_approval("russian_post"):
+                raise integration_http_error(
+                    status_code=status.HTTP_409_CONFLICT,
+                    integration_name="russian_post",
+                    operation="normalize_address",
+                    provider=self.settings.russian_post_provider,
+                    mode=mode,
+                    error_code="POST_SANDBOX_APPROVAL_REQUIRED",
+                    safe_message="Russian Post sandbox approval is required before address normalization.",
+                    retryable=False,
+                    manual_action_required=True,
+                    details_safe_json={"approval_status": sandbox_service.approval_status("russian_post")},
+                )
+        adapter = get_russian_post_adapter(mode)
+        if hasattr(adapter, "normalize_address"):
+            return adapter.normalize_address(address)
+        return {
+            "normalized_address": address.strip(),
+            "status": "manual_required",
+            "source": mode,
+        }
+
     def send_dispatch(self, dispatch_id: int, *, dry_run: bool) -> dict:
         dispatch = self.get_dispatch(dispatch_id)
         if dispatch.provider_mode == "RUSSIAN_POST_SANDBOX_READY" and not dry_run:

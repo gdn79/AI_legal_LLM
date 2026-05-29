@@ -78,6 +78,9 @@ def test_court_arbitr_connection(
         }
     else:
         result = adapter.test_connection()
+        if sandbox:
+            result["sandbox"] = True
+            result["credentials_present"] = sandbox_service.credentials_present("court")
     integration.finish_log(
         entry,
         status="SUCCESS" if result["ok"] else "FAILED",

@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, File, Form, Query, UploadFile
+from fastapi import APIRouter, Depends, File, Form, HTTPException, Query, UploadFile
 from sqlalchemy.orm import Session
 
 from app.api.deps import get_request_id, require_role
@@ -6,7 +6,13 @@ from app.db.session import get_db
 from app.models import RoleName, User
 from app.schemas.integration import ProviderConnectionCheck
 from app.repositories.audit_repository import AuditRepository
-from app.schemas.postal_dispatch import PostalDispatchRead, PostalProofCheckRead, PostalProofDocumentRead
+from app.schemas.postal_dispatch import (
+    AddressNormalizationRequest,
+    AddressNormalizationResultRead,
+    PostalDispatchRead,
+    PostalProofCheckRead,
+    PostalProofDocumentRead,
+)
 from app.services.audit_service import AuditService
 from app.services.integration_service import IntegrationService
 from app.services.postal_dispatch_service import PostalDispatchService
@@ -79,6 +85,9 @@ def test_russian_post_connection(
         }
     else:
         result = adapter.test_connection()
+        if sandbox:
+            result["sandbox"] = True
+            result["credentials_present"] = sandbox_service.credentials_present("russian_post")
     integration.finish_log(
         entry,
         status="SUCCESS" if result["ok"] else "FAILED",
@@ -96,6 +105,56 @@ def test_russian_post_connection(
         request_id,
     )
     return ProviderConnectionCheck(**result)
+
+
+@router.post("/normalize-address", response_model=AddressNormalizationResultRead)
+def normalize_address(
+    payload: AddressNormalizationRequest,
+    sandbox: bool = Query(default=False),
+    current_user: User = Depends(require_role(RoleName.admin, RoleName.lawyer)),
+    db: Session = Depends(get_db),
+    request_id: str = Depends(get_request_id),
+):
+    integration = IntegrationService(db)
+    settings = get_settings()
+    mode = "RUSSIAN_POST_SANDBOX_READY" if sandbox else settings.russian_post_mode
+    entry = integration.create_log(
+        integration_name="russian_post",
+        provider=settings.russian_post_provider,
+        mode=mode,
+        operation="normalize_address",
+        request_id=request_id,
+        created_by_id=current_user.id,
+        safe_request_metadata={"sandbox": sandbox, "address_length": len(payload.address.strip())},
+    )
+    try:
+        result = PostalDispatchService(db).normalize_address(payload.address, sandbox=sandbox)
+    except HTTPException as exc:
+        detail = exc.detail if isinstance(exc.detail, dict) else {}
+        integration.finish_log(
+            entry,
+            status="FAILED",
+            http_status=exc.status_code,
+            safe_response_metadata={},
+            error_code=detail.get("error_code", "POST_NORMALIZE_FAILED"),
+            error_message=detail.get("safe_message", "Russian Post address normalization failed"),
+        )
+        raise
+    integration.finish_log(
+        entry,
+        status="SUCCESS",
+        http_status=200,
+        safe_response_metadata=result,
+    )
+    AuditService(AuditRepository(db)).log(
+        current_user.id,
+        "russian_post_address_normalized",
+        "integration",
+        "russian_post",
+        f"mode={mode};sandbox={sandbox}",
+        request_id,
+    )
+    return AddressNormalizationResultRead(**result)
 
 
 @router.post("/dispatches/{dispatch_id}/status", response_model=PostalDispatchRead)
