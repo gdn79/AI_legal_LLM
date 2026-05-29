@@ -1,0 +1,5 @@
+case_id=1
+organization_id=1
+external_case_uid=7701234588-A40-10002
+note=manual
+submission_mode=MANUAL_ONLY

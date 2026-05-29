@@ -1,0 +1,18 @@
+[
+  {
+    "id": 4,
+    "recipient_name": "OOO Gamma",
+    "recipient_address": "Moscow, Respondent street, 7",
+    "status": "DELIVERED",
+    "tracking_number": "TRACK-00002",
+    "source": "MOCK_FOR_DEV",
+    "proofs": [
+      {
+        "id": 4,
+        "file_name": "claim-copy-proof-002.pdf",
+        "proof_type": "claim_copy_dispatch_receipt",
+        "file_path": "storage\\case_2\\postal_proofs\\claim-copy-proof-002.pdf"
+      }
+    ]
+  }
+]

@@ -1,0 +1,40 @@
+{
+  "sources": [
+    {
+      "id": 1,
+      "title": "RAG source for DEMO-001 director happy path",
+      "source_type": "law",
+      "category": "claim",
+      "jurisdiction": "RU",
+      "fragment": "Legal source for DEMO-001 director happy path says copy of the claim to the respondent.",
+      "score": 0.87,
+      "path": "/demo/claim.txt"
+    },
+    {
+      "id": 2,
+      "title": "Pretension source for DEMO-001 director happy path",
+      "source_type": "law",
+      "category": "pretension",
+      "jurisdiction": "RU",
+      "fragment": "Pretrial source for DEMO-001 director happy path.",
+      "score": 0.49,
+      "path": "/demo/pretension.txt"
+    }
+  ],
+  "citations": [
+    {
+      "id": 1,
+      "source_id": 1,
+      "target_type": "claim",
+      "target_id": 1,
+      "quote": "copy of the claim to the respondent"
+    },
+    {
+      "id": 2,
+      "source_id": 2,
+      "target_type": "pretension",
+      "target_id": 1,
+      "quote": "send a pretension before the claim"
+    }
+  ]
+}

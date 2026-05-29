@@ -1,0 +1,14 @@
+{
+  "id": 1,
+  "inn": "7701234588",
+  "kpp": "77014588",
+  "ogrn": "10277004588",
+  "short_name": "Mock Org 4588",
+  "full_name": "Mock Organization 4588",
+  "legal_address": "Moscow, Test street, 39",
+  "director_name": "Director 4588",
+  "director_position": "General Director",
+  "review_status": "VERIFIED",
+  "source": "MOCK_FNS_PROVIDER",
+  "actual_at": "2026-05-29T15:35:40.491395"
+}

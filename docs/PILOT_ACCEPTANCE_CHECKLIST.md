@@ -1,0 +1,27 @@
+# Pilot Acceptance Checklist
+
+- [ ] System starts locally
+- [ ] Demo seed is created
+- [ ] Backend tests pass
+- [ ] Frontend lint passes
+- [ ] Frontend unit tests pass
+- [ ] Frontend typecheck passes
+- [ ] Frontend build passes
+- [ ] Frontend E2E passes
+- [ ] No RED blockers returned
+- [ ] Secrets do not appear in audit
+- [ ] Pilot feedback API and UI work
+- [ ] Pilot metrics and pilot report can be generated
+- [ ] DEMO-001 and DEMO-002 pass happy-path checks
+- [ ] DEMO-003 stays blocked on authority gate
+- [ ] Export without claim copy proof is forbidden
+- [ ] Authority checks work
+- [ ] Expired POA blocks approval
+- [ ] Revoked POA blocks approval
+- [ ] Postal proof gate works
+- [ ] Court import mock works
+- [ ] Export contains 12 sections
+- [ ] Audit log contains key events
+- [ ] npm audit has no critical/high issues without explanation
+- [ ] Real APIs remain disabled
+- [ ] Pilot runbook is ready

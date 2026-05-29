@@ -1,0 +1,54 @@
+{
+  "period": "internal pilot",
+  "date_from": "2026-05-01",
+  "date_to": "2026-05-31",
+  "total_cases": 3,
+  "case_statuses": {
+    "EXPORTED": 2,
+    "NEW": 1
+  },
+  "feedback_total": 6,
+  "feedback_by_severity": {
+    "BLOCKER": 1,
+    "HIGH": 0,
+    "MEDIUM": 2,
+    "LOW": 1,
+    "IDEA": 2
+  },
+  "average_pretension_draft_minutes": null,
+  "average_claim_draft_minutes": 25.0,
+  "ai_rag_warnings": 0,
+  "authority_warnings": 0,
+  "authority_invalids": 1,
+  "authority_checks_total": 5,
+  "blocked_actions": 1,
+  "exports_generated": 2,
+  "exported_case_ids": [
+    1,
+    2
+  ],
+  "unresolved_items": [],
+  "timeline_summary": {
+    "FACT_EXTRACTION_COMPLETED": 6,
+    "CLAIM_GENERATED": 6,
+    "CASE_CREATED": 3,
+    "PRETENSION_GENERATED": 3,
+    "DOCUMENT_UPLOADED": 9,
+    "FACT_EXTRACTION_STARTED": 3,
+    "RAG_SOURCES_ATTACHED": 3,
+    "AUTHORITY_CHECK_PASSED": 10,
+    "PRETENSION_APPROVED": 2,
+    "CLAIM_APPROVED": 2,
+    "PRETENSION_PROOF_UPLOADED": 3,
+    "CLAIM_COPY_PROOF_UPLOADED": 2,
+    "COURT_PACKAGE_READY": 2,
+    "COURT_IMPORT_COMPLETED": 3,
+    "COURT_IMPORT_STARTED": 3,
+    "COURT_PACKAGE_CREATED": 2,
+    "EXPORT_GENERATED": 2,
+    "PILOT_FEEDBACK_CREATED": 6,
+    "EXPORT_BLOCKED": 3,
+    "AUTHORITY_CHECK_FAILED": 12
+  },
+  "recommendation": "go"
+}

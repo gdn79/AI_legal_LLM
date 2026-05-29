@@ -1,0 +1,14 @@
+{
+  "id": 1,
+  "inn": "7701234567",
+  "kpp": "770101001",
+  "ogrn": "1027700123456",
+  "short_name": "OOO Alpha",
+  "full_name": "Obshchestvo s ogranichennoy otvetstvennostyu Alpha",
+  "legal_address": "Moscow, Demo street, 1",
+  "director_name": "Ivanov I.I.",
+  "director_position": "General Director",
+  "review_status": "VERIFIED",
+  "source": "MOCK_FNS_PROVIDER",
+  "actual_at": "2026-05-29T13:33:36.116060"
+}

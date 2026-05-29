@@ -1,0 +1,37 @@
+[
+  {
+    "id": 3,
+    "number": "DEMO-POA-REVOKED",
+    "issued_at": "2026-01-01",
+    "expires_at": "2026-12-31",
+    "status": "REVOKED",
+    "authority_scope": [
+      "SIGN_CLAIM"
+    ],
+    "file_path": "storage\\organization_1\\powers_of_attorney\\demo-poa-revoked.pdf"
+  },
+  {
+    "id": 2,
+    "number": "DEMO-POA-EXPIRED",
+    "issued_at": "2025-01-01",
+    "expires_at": "2025-12-31",
+    "status": "EXPIRED",
+    "authority_scope": [
+      "SIGN_CLAIM"
+    ],
+    "file_path": "storage\\organization_1\\powers_of_attorney\\demo-poa-expired.pdf"
+  },
+  {
+    "id": 1,
+    "number": "DEMO-POA-ACTIVE",
+    "issued_at": "2026-01-01",
+    "expires_at": "2026-12-31",
+    "status": "ACTIVE",
+    "authority_scope": [
+      "REPRESENT_IN_COURT",
+      "SIGN_CLAIM",
+      "SIGN_PRETENSION"
+    ],
+    "file_path": "storage\\organization_1\\powers_of_attorney\\demo-poa-active.pdf"
+  }
+]

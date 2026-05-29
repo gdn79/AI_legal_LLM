@@ -1,0 +1,40 @@
+{
+  "sources": [
+    {
+      "id": 3,
+      "title": "RAG source for DEMO-002 employee happy path",
+      "source_type": "law",
+      "category": "claim",
+      "jurisdiction": "RU",
+      "fragment": "Legal source for DEMO-002 employee happy path says pretrial procedure must be reflected.",
+      "score": 0.88,
+      "path": "/demo/claim.txt"
+    },
+    {
+      "id": 4,
+      "title": "Pretension source for DEMO-002 employee happy path",
+      "source_type": "law",
+      "category": "pretension",
+      "jurisdiction": "RU",
+      "fragment": "Pretrial source for DEMO-002 employee happy path.",
+      "score": 0.49,
+      "path": "/demo/pretension.txt"
+    }
+  ],
+  "citations": [
+    {
+      "id": 3,
+      "source_id": 3,
+      "target_type": "claim",
+      "target_id": 2,
+      "quote": "pretrial procedure must be reflected"
+    },
+    {
+      "id": 4,
+      "source_id": 4,
+      "target_type": "pretension",
+      "target_id": 2,
+      "quote": "send a pretension before the claim"
+    }
+  ]
+}

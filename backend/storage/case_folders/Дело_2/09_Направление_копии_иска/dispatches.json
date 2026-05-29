@@ -1,0 +1,18 @@
+[
+  {
+    "id": 2,
+    "recipient_name": "ООО Ответчик",
+    "recipient_address": "Москва, ул. Пример, д. 1",
+    "status": "DELIVERED",
+    "tracking_number": "TRACK-00002",
+    "source": "MOCK_FOR_DEV",
+    "proofs": [
+      {
+        "id": 2,
+        "file_name": "proof.pdf",
+        "proof_type": "claim_copy_dispatch_receipt",
+        "file_path": "storage\\case_2\\postal_proofs\\proof.pdf"
+      }
+    ]
+  }
+]

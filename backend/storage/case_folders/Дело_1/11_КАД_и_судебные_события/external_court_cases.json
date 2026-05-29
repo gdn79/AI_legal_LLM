@@ -1,0 +1,25 @@
+[
+  {
+    "id": 2,
+    "external_case_uid": "7701234588-A40-10002",
+    "case_number": "А40-10002/2026",
+    "court_name": "Арбитражный суд города Москвы",
+    "participant_role": "claimant",
+    "claim_subject": "Неосновательное обогащение в пользу Mock Org 4588",
+    "payload_hash": "f46ca4b6ce577d87637c3b0a42114663ed263cb9facd9292637fc970e73cc8f8",
+    "events": [
+      {
+        "event_type": "registered",
+        "event_date": "2026-05-29",
+        "description": "Карточка дела загружена"
+      }
+    ],
+    "snapshots": [
+      {
+        "source": "MOCK_FOR_DEV",
+        "snapshot_hash": "1179221d00488e2d64dbc4ffa3d4c20788f96786a8ac20c751c622e659910f28",
+        "snapshot_payload": "{\"date_from\": \"2026-05-29\", \"date_to\": \"2026-05-29\", \"inn\": \"7701234588\", \"organization_name\": \"Mock Org 4588\", \"participant_role\": \"claimant\"}"
+      }
+    ]
+  }
+]

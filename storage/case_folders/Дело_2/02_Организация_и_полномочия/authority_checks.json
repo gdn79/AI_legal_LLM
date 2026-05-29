@@ -1,0 +1,49 @@
+[
+  {
+    "id": 8,
+    "document_kind": "claim",
+    "required_scopes": [
+      "REPRESENT_IN_COURT",
+      "SIGN_CLAIM"
+    ],
+    "result": "PASSED",
+    "reason": "Authority confirmed by power of attorney DEMO-POA-ACTIVE",
+    "power_of_attorney_id": 1,
+    "checked_at": "2026-05-29T13:33:36.905922"
+  },
+  {
+    "id": 6,
+    "document_kind": "claim",
+    "required_scopes": [
+      "REPRESENT_IN_COURT",
+      "SIGN_CLAIM"
+    ],
+    "result": "PASSED",
+    "reason": "Authority confirmed by power of attorney DEMO-POA-ACTIVE",
+    "power_of_attorney_id": 1,
+    "checked_at": "2026-05-29T13:33:36.408810"
+  },
+  {
+    "id": 5,
+    "document_kind": "claim",
+    "required_scopes": [
+      "REPRESENT_IN_COURT",
+      "SIGN_CLAIM"
+    ],
+    "result": "PASSED",
+    "reason": "Authority confirmed by power of attorney DEMO-POA-ACTIVE",
+    "power_of_attorney_id": 1,
+    "checked_at": "2026-05-29T13:33:36.372800"
+  },
+  {
+    "id": 4,
+    "document_kind": "pretension",
+    "required_scopes": [
+      "SIGN_PRETENSION"
+    ],
+    "result": "PASSED",
+    "reason": "Authority confirmed by power of attorney DEMO-POA-ACTIVE",
+    "power_of_attorney_id": 1,
+    "checked_at": "2026-05-29T13:33:36.363799"
+  }
+]

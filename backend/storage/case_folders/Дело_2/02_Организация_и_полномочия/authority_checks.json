@@ -1,0 +1,38 @@
+[
+  {
+    "id": 5,
+    "document_kind": "claim",
+    "required_scopes": [
+      "REPRESENT_IN_COURT",
+      "SIGN_CLAIM"
+    ],
+    "result": "PASSED",
+    "reason": "Authority confirmed by power of attorney POA-HAPPY",
+    "power_of_attorney_id": 1,
+    "checked_at": "2026-05-29T15:35:33.149120"
+  },
+  {
+    "id": 4,
+    "document_kind": "claim",
+    "required_scopes": [
+      "REPRESENT_IN_COURT",
+      "SIGN_CLAIM"
+    ],
+    "result": "PASSED",
+    "reason": "Authority confirmed by power of attorney POA-HAPPY",
+    "power_of_attorney_id": 1,
+    "checked_at": "2026-05-29T15:35:33.080104"
+  },
+  {
+    "id": 3,
+    "document_kind": "claim",
+    "required_scopes": [
+      "REPRESENT_IN_COURT",
+      "SIGN_CLAIM"
+    ],
+    "result": "PASSED",
+    "reason": "Authority confirmed by power of attorney POA-HAPPY",
+    "power_of_attorney_id": 1,
+    "checked_at": "2026-05-29T15:35:33.046096"
+  }
+]

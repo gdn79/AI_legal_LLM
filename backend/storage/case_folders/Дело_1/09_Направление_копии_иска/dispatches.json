@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "recipient_name": "OOO Beta",
+    "recipient_address": "Moscow",
+    "status": "DELIVERED",
+    "tracking_number": "TRACK-00001",
+    "source": "MOCK_FOR_DEV",
+    "proofs": [
+      {
+        "id": 1,
+        "file_name": "proof.pdf",
+        "proof_type": "claim_copy_dispatch_receipt",
+        "file_path": "storage\\case_1\\postal_proofs\\proof.pdf"
+      }
+    ]
+  }
+]

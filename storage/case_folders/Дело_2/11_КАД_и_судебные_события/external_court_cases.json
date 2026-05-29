@@ -1,0 +1,25 @@
+[
+  {
+    "id": 2,
+    "external_case_uid": "7701234567-A40-10002",
+    "case_number": "А40-10002/2026",
+    "court_name": "Арбитражный суд города Москвы",
+    "participant_role": "claimant",
+    "claim_subject": "Неосновательное обогащение в пользу OOO Alpha",
+    "payload_hash": "48cfe5e232950d386ea10b89292e4d377f7179d52b91397d6af0e2a7a6fa4fe8",
+    "events": [
+      {
+        "event_type": "registered",
+        "event_date": "2026-05-31",
+        "description": "Карточка дела загружена"
+      }
+    ],
+    "snapshots": [
+      {
+        "source": "MOCK_FOR_DEV",
+        "snapshot_hash": "5171536145b138a99b6e8d26736e2e4a0425106aecb77ba3b46410470b857b8f",
+        "snapshot_payload": "{\"date_from\": \"2026-05-01\", \"date_to\": \"2026-05-31\", \"inn\": \"7701234567\", \"organization_name\": \"OOO Alpha\", \"participant_role\": \"claimant\"}"
+      }
+    ]
+  }
+]

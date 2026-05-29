@@ -1,0 +1,37 @@
+[
+  {
+    "id": 3,
+    "document_kind": "claim",
+    "required_scopes": [
+      "REPRESENT_IN_COURT",
+      "SIGN_CLAIM"
+    ],
+    "result": "PASSED",
+    "reason": "Director authority confirmed by FNS data",
+    "power_of_attorney_id": null,
+    "checked_at": "2026-05-29T13:33:36.310787"
+  },
+  {
+    "id": 2,
+    "document_kind": "claim",
+    "required_scopes": [
+      "REPRESENT_IN_COURT",
+      "SIGN_CLAIM"
+    ],
+    "result": "PASSED",
+    "reason": "Director authority confirmed by FNS data",
+    "power_of_attorney_id": null,
+    "checked_at": "2026-05-29T13:33:36.268776"
+  },
+  {
+    "id": 1,
+    "document_kind": "pretension",
+    "required_scopes": [
+      "SIGN_PRETENSION"
+    ],
+    "result": "PASSED",
+    "reason": "Director authority confirmed by FNS data",
+    "power_of_attorney_id": null,
+    "checked_at": "2026-05-29T13:33:36.256775"
+  }
+]

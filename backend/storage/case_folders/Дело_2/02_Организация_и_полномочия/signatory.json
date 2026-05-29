@@ -1,0 +1,8 @@
+{
+  "id": 2,
+  "organization_id": 1,
+  "employee_id": 1,
+  "signatory_type": "AUTHORIZED_EMPLOYEE",
+  "full_name": "Employee Happy",
+  "authority_basis": "POWER_OF_ATTORNEY"
+}
